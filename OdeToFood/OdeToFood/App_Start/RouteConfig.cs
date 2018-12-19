@@ -25,10 +25,12 @@ namespace OdeToFood
                 );
 
             //This is greedy and will match just about any request
+
+            // host/Home/Index  --> Home is controller; Index is action
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+                defaults: new { controller = "Home", action = "BIndex", id = UrlParameter.Optional }
             );
         }
     }

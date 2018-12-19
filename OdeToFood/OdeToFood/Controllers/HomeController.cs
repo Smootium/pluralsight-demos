@@ -5,7 +5,7 @@ namespace OdeToFood.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Index()
+        public ActionResult BIndex()
         {
             var controller = RouteData.Values["controller"];
             var action = RouteData.Values["action"];
