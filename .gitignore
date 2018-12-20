@@ -3,3 +3,11 @@
 ################################################################################
 
 /.vs/slnx.sqlite
+/.vs
+/OdeToFood/OdeToFood/bin
+/OdeToFood/.vs
+/OdeToFood/OdeToFood/obj/Debug
+/OdeToFood/OdeToFood.Tests/bin
+/OdeToFood/OdeToFood.Tests/obj/Debug
+/OdeToFood/packages
+*.cache
