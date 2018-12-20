@@ -28,3 +28,4 @@ bld/
 !**/packages/build/
 ApplicationInsights.config
 *.publishsettings
+/Asp.NetCoreWithOAuth/src/MyCompany.IDP/tempkey.rsa
