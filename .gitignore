@@ -2,4 +2,29 @@
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
-/.vs/slnx.sqlite
+.vs/
+*/bin
+*/obj/Debug
+*/packages
+*.cache
+*.suo
+*.user
+*.userosscache
+*.userprefs
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Tt]est[Rr]esult*/
+[Bb]uild[Ll]og.*
+*.nupkg
+**/packages/*
+!**/packages/build/
+ApplicationInsights.config
+*.publishsettings
