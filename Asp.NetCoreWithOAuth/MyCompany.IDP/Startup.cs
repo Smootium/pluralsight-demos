@@ -11,8 +11,10 @@ namespace MyCompany.IDP
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddMvc();
             services.AddIdentityServer()
-                .AddTemporarySigningCredential()
+                .AddDeveloperSigningCredential()
+                //.AddTemporarySigningCredential()
                 .AddTestUsers(Config.GetUsers())
                 .AddInMemoryIdentityResources(Config.GetIdentityResources())
                 .AddInMemoryClients(Config.GetClients());
@@ -31,7 +33,7 @@ namespace MyCompany.IDP
 
             app.UseIdentityServer();
 
-
+            app.UseMvcWithDefaultRoute();
             //We don't need this now, as we let the identity server middleware handle each request
             //app.Run(async (context) =>
             //{
