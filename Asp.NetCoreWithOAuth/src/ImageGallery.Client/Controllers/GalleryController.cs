@@ -10,6 +10,7 @@ using ImageGallery.Client.ViewModels;
 using ImageGallery.Model;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -56,6 +57,13 @@ namespace ImageGallery.Client.Controllers
             //Signing out this way will sign out of the Web Client, not the IDP; need a redirect
             //The scheme we pass in must match the scheme name when configuring the cookie authentication middleware
             await AuthenticationHttpContextExtensions.SignOutAsync(_accessor.HttpContext, CookieAuthenticationDefaults.AuthenticationScheme);
+
+            //this will also logout of the IDC, but without setting a logout redirect either in the web client (i.e., ImageGallery.Client.Startup) or the IDP (i.e., MyCompany.IDP.Config)
+            //the user has to then click Logout on the IDP, which isn't great UX.
+            //Debug output shows "Invalid post logout URI" and that default is '...:44367/signout-callback-oidc')
+
+            //The scheme we pass in must match the scheme name when configuring the OpenId middleware (in Startup.cs)
+            await AuthenticationHttpContextExtensions.SignOutAsync(_accessor.HttpContext, OpenIdConnectDefaults.AuthenticationScheme);
         }
 
         public async Task<IActionResult> EditImage(Guid id)

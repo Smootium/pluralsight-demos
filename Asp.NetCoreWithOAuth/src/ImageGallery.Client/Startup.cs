@@ -85,6 +85,9 @@ namespace ImageGallery.Client
                     // instead of including the Claims in the Id token (which keeps the token smaller)
                     o.GetClaimsFromUserInfoEndpoint = true;
 
+                    // this is default, but it can be changed here or in the IDP's Config class's PostLogoutRedirectUris
+                    //o.SignedOutCallbackPath = new PathString("signout-callback-oidc");
+
                     // this is default, but if you wanted to use a different redirect uri endpoint than what's set in IDP's Config class's RedirectUris, you can set it here
                     //o.CallbackPath = new PathString("...");
                 });

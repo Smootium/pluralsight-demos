@@ -78,6 +78,10 @@ namespace MyCompany.IDP
                     ClientSecrets =
                     {
                         new Secret("secret".Sha256())
+                    },
+                    PostLogoutRedirectUris =
+                    {
+                        "https://localhost:44367/signout-callback-oidc"
                     }
                 }
             };
