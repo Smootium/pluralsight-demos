@@ -51,7 +51,8 @@ namespace MyCompany.IDP
                   I.e., if the client requests the Profile scope, the given_name and familiy_name claims are returned.
                 */
                 new IdentityResources.OpenId(),
-                new IdentityResources.Profile()
+                new IdentityResources.Profile(),
+                new IdentityResources.Email()
             };
         }
 
@@ -63,6 +64,7 @@ namespace MyCompany.IDP
                 {
                     ClientName = "Image Gallery",
                     ClientId = "imagegalleryclient",
+                    Enabled = true,
                     AllowedGrantTypes = GrantTypes.Hybrid,
                     RedirectUris = new List<string>()
                     {
@@ -72,6 +74,10 @@ namespace MyCompany.IDP
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile
+                    },
+                    ClientSecrets =
+                    {
+                        new Secret("secret".Sha256())
                     }
                 }
             };
