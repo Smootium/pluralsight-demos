@@ -9,6 +9,7 @@ using ImageGallery.Client.Services;
 using ImageGallery.Client.ViewModels;
 using ImageGallery.Model;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -48,6 +49,13 @@ namespace ImageGallery.Client.Controllers
             }
 
             throw new Exception($"A problem happened while calling the API: {response.ReasonPhrase}");
+        }
+
+        public async Task Logout()
+        {
+            //Signing out this way will sign out of the Web Client, not the IDP; need a redirect
+            //The scheme we pass in must match the scheme name when configuring the cookie authentication middleware
+            await AuthenticationHttpContextExtensions.SignOutAsync(_accessor.HttpContext, CookieAuthenticationDefaults.AuthenticationScheme);
         }
 
         public async Task<IActionResult> EditImage(Guid id)
@@ -172,7 +180,7 @@ namespace ImageGallery.Client.Controllers
         }
 
         //Just some debug/helper code
-        public async Task WriteOutIdentityInformation(IHttpContextAccessor accessor)
+        private async Task WriteOutIdentityInformation(IHttpContextAccessor accessor)
         {
             //get the saved identity token
             // used to be 'await HttpContext.Authentication.GetTokenAsync(OpenIdConnectParameterNames.IdToken);' but was changed in 2.0

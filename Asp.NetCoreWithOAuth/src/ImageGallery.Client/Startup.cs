@@ -34,6 +34,7 @@ namespace ImageGallery.Client
                         AuthenticationScheme = "Cookies"
                     });
              * You also had to add the Auth middleware before MVC middleware, as the Auth middleware would allow/block requests
+             * 
              * In Auth 2.0, there is now only a single Authentication middleware, and each authentication scheme is registered during ConfigureServices
              * See https://github.com/aspnet/Security/issues/1310
              * 
@@ -73,11 +74,17 @@ namespace ImageGallery.Client
                     // this is one of the response types for flow (hybrid grant)
                     o.ResponseType = "code id_token";
 
+                    // this apparently isn't needed (now; at some point while trying to get this to work, I added it. Not sure if it was ever needed?
                     // this should match the scheme used for authentication
-                    o.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                    //o.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
 
                     o.SaveTokens = true;
                     o.ClientSecret = "secret";
+
+                    // this ensures that the middleware will call the UserInfo endpoint to get the info on the User
+                    // instead of including the Claims in the Id token (which keeps the token smaller)
+                    o.GetClaimsFromUserInfoEndpoint = true;
+
                     // this is default, but if you wanted to use a different redirect uri endpoint than what's set in IDP's Config class's RedirectUris, you can set it here
                     //o.CallbackPath = new PathString("...");
                 });
