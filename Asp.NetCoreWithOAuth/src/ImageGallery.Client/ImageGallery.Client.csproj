@@ -21,6 +21,7 @@
 
   <ItemGroup>
     <PackageReference Include="BundlerMinifier.Core" Version="2.3.327" />
+    <PackageReference Include="IdentityModel" Version="3.10.4" />
     <PackageReference Include="microsoft.aspnetcore.authentication.cookies" Version="2.2.0" />
     <PackageReference Include="microsoft.aspnetcore.authentication.openidconnect" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics" Version="2.2.0" />

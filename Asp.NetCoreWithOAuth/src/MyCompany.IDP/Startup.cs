@@ -14,10 +14,9 @@ namespace MyCompany.IDP
             services.AddMvc();
             services.AddIdentityServer()
                 .AddDeveloperSigningCredential()
-                //.AddTemporarySigningCredential()
-                .AddTestUsers(Config.GetUsers())
                 .AddInMemoryIdentityResources(Config.GetIdentityResources())
-                .AddInMemoryClients(Config.GetClients());
+                .AddInMemoryClients(Config.GetClients())
+                .AddTestUsers(Config.GetUsers());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

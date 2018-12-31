@@ -3,6 +3,7 @@ using System.Security.Claims;
 using IdentityServer4;
 using IdentityServer4.Models;
 using IdentityServer4.Test;
+using static IdentityServer4.IdentityServerConstants;
 
 namespace MyCompany.IDP
 {
@@ -21,7 +22,8 @@ namespace MyCompany.IDP
                     Claims = new List<Claim>
                     {
                         new Claim("given_name","George"),
-                        new Claim("family_name","Monkey")
+                        new Claim("family_name","Monkey"),
+                        new Claim(StandardScopes.Address,"Jungle in Africa")
                     }
                 },
                 new TestUser
@@ -33,7 +35,8 @@ namespace MyCompany.IDP
                     Claims = new List<Claim>
                     {
                         new Claim("given_name","YellowHat"),
-                        new Claim("family_name","Man")
+                        new Claim("family_name","Man"),
+                        new Claim(StandardScopes.Address,"A house in the country")
                     }
                 }
             };
@@ -48,11 +51,11 @@ namespace MyCompany.IDP
                 /*OpenId scope ensures the user identifier (aka, SubjectId) is included
                   I.e., if the client requests the OpenId scope, the Subject claim is returned
                   The profile scope maps to profile-related claims.
-                  I.e., if the client requests the Profile scope, the given_name and familiy_name claims are returned.
+                  I.e., if the client requests the Profile scope, the given_name and family_name claims are returned.
                 */
                 new IdentityResources.OpenId(),
                 new IdentityResources.Profile(),
-                new IdentityResources.Email()
+                new IdentityResources.Address()
             };
         }
 
@@ -73,7 +76,8 @@ namespace MyCompany.IDP
                     AllowedScopes =
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
-                        IdentityServerConstants.StandardScopes.Profile
+                        IdentityServerConstants.StandardScopes.Profile,
+                        IdentityServerConstants.StandardScopes.Address
                     },
                     ClientSecrets =
                     {

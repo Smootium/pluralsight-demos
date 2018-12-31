@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using IdentityModel.Client;
 using ImageGallery.Client.Services;
 using ImageGallery.Client.ViewModels;
 using ImageGallery.Model;
@@ -50,6 +51,38 @@ namespace ImageGallery.Client.Controllers
             }
 
             throw new Exception($"A problem happened while calling the API: {response.ReasonPhrase}");
+        }
+
+        public async Task<IActionResult> OrderFrame()
+        {
+            //create a uri to call user info endpoint with
+            //use discovery client to read metadata instead
+            //Obsolete soon:
+            //var discoveryClient = new DiscoveryClient("https://localhost:44305/");
+            //var metadataResponse = await discoveryClient.GetAsync();
+            //var userInfoClient = new UserInfoClient(metadataResponse.UserInfoEndpoint);
+
+            var client = new HttpClient();
+            var discoveryClient = await client.GetDiscoveryDocumentAsync("https://localhost:44305/");
+            if (discoveryClient.IsError)
+                throw new Exception(discoveryClient.Error);
+            var userInfoEndpoint = discoveryClient.UserInfoEndpoint;
+
+            //Get access token
+            var a_Token = await _accessor.HttpContext.GetTokenAsync(OpenIdConnectParameterNames.AccessToken);
+
+            var response = await client.GetUserInfoAsync(new UserInfoRequest
+            {
+                Address = userInfoEndpoint,
+                Token = a_Token
+            });
+
+            if (response.IsError)
+                throw new Exception("Problem accessing the UserInfo endpoint", response.Exception);
+
+            var address = response.Claims.FirstOrDefault(c => c.Type == "address")?.Value;
+
+            return View(new OrderFrameViewModel(address));
         }
 
         public async Task Logout()
