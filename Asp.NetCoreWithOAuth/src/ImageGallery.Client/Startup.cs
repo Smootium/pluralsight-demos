@@ -83,6 +83,7 @@ namespace ImageGallery.Client
                     //By default, OpenIdConnectOptions.Scope is "pre-loaded" with "openid" and "profile" scopes.
                     //Add'l scopes that we want included in the auth token (that eventually is requested from user info endpoint) must be added here
                     o.Scope.Add("address");
+                    o.Scope.Add("roles");
 
                     // this is one of the response types for flow (hybrid grant)
                     o.ResponseType = "code id_token";

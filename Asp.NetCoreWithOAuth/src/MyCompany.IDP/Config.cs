@@ -18,12 +18,12 @@ namespace MyCompany.IDP
                     SubjectId = "D7022502-84B8-4371-9B55-AD040580E319",
                     Username = "George",
                     Password = "George",
-
                     Claims = new List<Claim>
                     {
                         new Claim("given_name","George"),
                         new Claim("family_name","Monkey"),
-                        new Claim(StandardScopes.Address,"Jungle in Africa")
+                        new Claim(StandardScopes.Address,"Jungle in Africa"),
+                        new Claim("role", "FreeUser")
                     }
                 },
                 new TestUser
@@ -31,12 +31,12 @@ namespace MyCompany.IDP
                     SubjectId = "61F635E1-40A8-413C-AD2B-334485A1D179",
                     Username = "YellowHat",
                     Password = "YellowHat",
-
                     Claims = new List<Claim>
                     {
-                        new Claim("given_name","YellowHat"),
-                        new Claim("family_name","Man"),
-                        new Claim(StandardScopes.Address,"A house in the country")
+                        new Claim("given_name", "YellowHat"),
+                        new Claim("family_name", "Man"),
+                        new Claim(StandardScopes.Address, "A house in the country"),
+                        new Claim("role", "PayingUser")
                     }
                 }
             };
@@ -55,7 +55,8 @@ namespace MyCompany.IDP
                 */
                 new IdentityResources.OpenId(),
                 new IdentityResources.Profile(),
-                new IdentityResources.Address()
+                new IdentityResources.Address(),
+                new IdentityResource("roles", "Your role(s)", new List<string>{ "role" })
             };
         }
 
@@ -77,7 +78,8 @@ namespace MyCompany.IDP
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
-                        IdentityServerConstants.StandardScopes.Address
+                        IdentityServerConstants.StandardScopes.Address,
+                        "roles"
                     },
                     ClientSecrets =
                     {
