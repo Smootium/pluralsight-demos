@@ -1,6 +1,7 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Threading.Tasks;
 using ImageGallery.Client.Services;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Builder;
@@ -99,6 +100,12 @@ namespace ImageGallery.Client
                     // instead of including the Claims in the Id token (which keeps the token smaller)
                     o.GetClaimsFromUserInfoEndpoint = true;
 
+                    //2.0 no longer adds all possible information from the user-info endpoint, it was causing major cookie bloat leading to login issues. 
+                    //There is now a system called ClaimActions where you can select which elements you want to map from the user info doc to claims.
+                    //^^Comment/answer from https://github.com/aspnet/Security/issues/1449
+                    //Without this, the "role" claim was not being included in the response from UserInfoEndpoint
+                    o.ClaimActions.MapJsonKey("role", "role");
+
                     //Let's cleanup the unnecessary claims (keeps the cookie smaller)
                     o.Events = new OpenIdConnectEvents()
                     {
@@ -156,7 +163,6 @@ namespace ImageGallery.Client
             {
                 app.UseExceptionHandler("/Shared/Error");
             }
-
             app.UseAuthentication();
             app.UseStaticFiles();
 
