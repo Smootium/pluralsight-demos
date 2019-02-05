@@ -1,0 +1,9 @@
+{
+  "name": "black-jack-js",
+  "version": "0.0.0",
+  "description": "BlackJackJS",
+  "main": "server.js",
+  "author": {
+    "name": "GML"
+  }
+}
